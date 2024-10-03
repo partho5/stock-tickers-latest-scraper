@@ -8,10 +8,10 @@ import {delay, randomDelay} from "../utils/timing.js"; // Use named import for c
 
 export const finVizMostActiveHTTP = async (url) => {
     try {
-        console.log('Fetching data from:', url);
+        // console.log('Fetching data from:', url);
         // Introduce a random delay to prevent 429 error
         const delayTime = randomDelay(5*1000, 7*1000);
-        console.log(`Waiting for ${delayTime} ms before next request...`);
+        // console.log(`Waiting for ${delayTime} ms before next request...`);
         await delay(delayTime);
 
         // Set headers to mimic a real browser
@@ -25,7 +25,7 @@ export const finVizMostActiveHTTP = async (url) => {
             throw new Error(`Failed to fetch data. Status code: ${response.status}`);
         }
 
-        console.log('Page fetched successfully');
+        // console.log('Page fetched successfully');
 
         // Load the HTML into cheerio (like BeautifulSoup in Python)
         const $ = cheerio.load(response.data);
@@ -36,7 +36,7 @@ export const finVizMostActiveHTTP = async (url) => {
             tdData.push($(element).text().trim());
         });
 
-        console.log('Extracted data:', tdData);
+        // console.log('Extracted data:', tdData);
         return tdData;
     } catch (error) {
         console.error(`Error: ${error.message}`);

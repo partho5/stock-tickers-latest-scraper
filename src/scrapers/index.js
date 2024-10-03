@@ -2,16 +2,16 @@
 
 import { tradingViewMostActive, tradingViewMostValuable } from './tradingView.js';
 import { yahooFinanceMostActive } from "./yahooFinance.js";
-import {finVizMostActive, finVizMostActiveHTTP} from "./finViz.js";
-import {wsjMostActive} from "./wsj.js";
+import { finVizMostActiveHTTP } from "./finViz.js";
+import { wsjMostActive } from "./wsj.js";
 
 
 export function getScrapingTasks(tasks) {
     const scrapingMap = {
-        // tradingViewMostActive,
-        // tradingViewMostValuable,
-        // yahooFinanceMostActive,
-        // finVizMostActiveHTTP,
+        tradingViewMostActive,
+        tradingViewMostValuable,
+        yahooFinanceMostActive,
+        finVizMostActiveHTTP,
         wsjMostActive,
     };
 
