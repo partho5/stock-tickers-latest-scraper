@@ -4,43 +4,46 @@ import { chromium } from 'playwright';
 
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import {delay, randomDelay} from "../utils/timing.js"; // Use named import for cheerio
+import {delay, randomDelay} from "../utils/timing.js";
+import {getRandomUserAgent} from "../utils/strings.js"; // Use named import for cheerio
 
 export const finVizMostActiveHTTP = async (url) => {
-    try {
-        // console.log('Fetching data from:', url);
-        // Introduce a random delay to prevent 429 error
-        const delayTime = randomDelay(5*1000, 7*1000);
-        // console.log(`Waiting for ${delayTime} ms before next request...`);
-        await delay(delayTime);
+    let attempt = 0;
+    while (attempt < 5) {
+        try {
+            const delayTime = randomDelay(10 * 1000, 15 * 1000);
+            await delay(delayTime);
 
-        // Set headers to mimic a real browser
-        const response = await axios.get(url, {
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+            const response = await axios.get(url, {
+                headers: {
+                    'User-Agent': getRandomUserAgent()
+                }
+            });
+
+            if (response.status !== 200) {
+                throw new Error(`Failed to fetch data. Status code: ${response.status}`);
             }
-        });
 
-        if (response.status !== 200) {
-            throw new Error(`Failed to fetch data. Status code: ${response.status}`);
+            const $ = cheerio.load(response.data);
+            const tdData = [];
+            $('td[align="left"] a.tab-link').each((index, element) => {
+                tdData.push($(element).text().trim());
+            });
+
+            console.log(`finVizMostActive ${url}`, tdData);
+
+            return tdData;
+        } catch (error) {
+            if (error.response && error.response.status === 429) {
+                attempt++;
+                const waitTime = Math.pow(2, attempt) * 1000; // Exponential backoff
+                console.log(`Received 429. Waiting for ${waitTime} ms before retrying...`);
+                await delay(waitTime);
+            } else {
+                console.error(`Error finVizMostActiveHTTP: ${error.message}`);
+                return [];
+            }
         }
-
-        // console.log('Page fetched successfully');
-
-        // Load the HTML into cheerio (like BeautifulSoup in Python)
-        const $ = cheerio.load(response.data);
-
-        // Extract the data using the provided selector
-        const tdData = [];
-        $('td[align="left"] a.tab-link').each((index, element) => {
-            tdData.push($(element).text().trim());
-        });
-
-        // console.log('Extracted data:', tdData);
-        return tdData;
-    } catch (error) {
-        console.error(`Error finVizMostActiveHTTP: ${error.message}`);
-        return [];
     }
 };
 

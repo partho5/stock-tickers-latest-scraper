@@ -3,7 +3,7 @@
 import { chromium } from 'playwright';
 import {extractTickerListFromBracket} from "../utils/strings.js";
 
-export const wsjMostActive = async (url) => {
+export const nasdaqMostActive = async (url) => {
     const browser = await chromium.launch();
     const context = await browser.newContext();
     const page = await context.newPage();
@@ -21,8 +21,6 @@ export const wsjMostActive = async (url) => {
             return firstTd ? firstTd.textContent.trim() : null; // Return trimmed text or null
         }).filter(text => text !== null) // Filter out null values
     );
-
-    console.log('wsjMostActive tickers:', firstTdTexts);
 
     // Close the browser
     await browser.close();

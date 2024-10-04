@@ -1,3 +1,4 @@
+import {USER_AGENTS} from "../data/userAgents.js";
 
 export const extractTickerListFromBracket = (data) => {
     return data.map(item => {
@@ -11,3 +12,9 @@ export const uniqueList = (arrays) => {
     const combined = [].concat(...arrays); // Flatten the array of arrays
     return [...new Set(combined)]; // Use Set to filter out duplicates
 };
+
+
+export const getRandomUserAgent = () => {
+    const randomIndex = Math.floor(Math.random() * USER_AGENTS.length);
+    return USER_AGENTS[randomIndex];
+}

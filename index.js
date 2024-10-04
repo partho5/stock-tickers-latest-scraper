@@ -5,6 +5,8 @@ import connectDB, {closeDBConnection} from "./src/database/config.js";
 
 
 async function main() {
+    const startTime = performance.now(); // Start timing
+
     try {
         await connectDB();
 
@@ -14,7 +16,12 @@ async function main() {
     } catch (error) {
         console.error('Error during scraping tasks:', error);
     } finally {
-        closeDBConnection();
+        await closeDBConnection();
+
+        const endTime = performance.now(); // End timing
+        const totalTime = endTime - startTime; // Calculate total time
+        console.log(`Total time taken: ${totalTime.toFixed(2)} milliseconds`);
+
         process.exit(0); // Exit the process
     }
 }

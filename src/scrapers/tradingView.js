@@ -14,6 +14,7 @@ export const tradingViewMostActive = async (url) => {
     await page.waitForSelector('a.apply-common-tooltip.tickerNameBox-GrtoTeat.tickerName-GrtoTeat');
     const tickerElements = await page.$$('a.apply-common-tooltip.tickerNameBox-GrtoTeat.tickerName-GrtoTeat');
     const tickers = await Promise.all(tickerElements.map(el => el.innerText()));
+    console.log('tradingViewMostActive', tickers);
     await browser.close();
     return tickers;
 };
@@ -26,6 +27,7 @@ export const tradingViewMostValuable = async (url) => {
     await page.waitForSelector('a.apply-common-tooltip.tickerNameBox-GrtoTeat.tickerName-GrtoTeat');
     const tickerElements = await page.$$('a.apply-common-tooltip.tickerNameBox-GrtoTeat.tickerName-GrtoTeat');
     const tickers = await Promise.all(tickerElements.map(el => el.innerText()));
+    console.log('tradingViewMostValuable', tickers);
     await browser.close();
     return tickers;
 };

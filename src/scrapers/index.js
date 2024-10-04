@@ -9,6 +9,7 @@ import {wsjMostActive} from "./wsj.js";
 import {finVizMostActiveHTTP} from "./finViz.js";
 import {yahooFinanceMostActive} from "./yahooFinance.js";
 import {tradingViewMostActive, tradingViewMostValuable} from "./tradingView.js";
+import {nasdaqMostActive} from "./nasdaq.js";
 
 
 function getScrapingTasks(tasks) {
@@ -19,11 +20,12 @@ function getScrapingTasks(tasks) {
         finVizMostActiveHTTP,
         wsjMostActive,
         stockAnalysisMostActive,
+        //nasdaqMostActive,
     };
 
     return tasks.map(task => ({
         label: task.label,
-        scrapeFunction: scrapingMap[task.label] || (() => { throw new Error(`Scraping function for ${task.label} not registered in ${getCurrentFilename()}`); }),
+        scrapeFunction: scrapingMap[task.label] || (() => { throw new Error(`Scraping function for ${task.label} not registered.`); }),
         url: task.url
     }));
 }
@@ -49,15 +51,10 @@ export const startScraper = async () => {
         .map(result => result.data); // Extract the data arrays
 
     const uniqueTickers = uniqueList(allTickers); // Get unique tickers
-    // console.log('Unique tickers:', uniqueTickers);
+    console.log('Unique tickers count:', uniqueTickers.length);
 
     // Serialize the unique tickers to a string
     const tickersString = uniqueTickers.join(',');
 
-    //saveToDatabase(tickersString, todayName());
+    await saveToDatabase(tickersString, todayName());
 }
-
-
-const getCurrentFilename = () => {
-    return __filename; // This will give you the full path of the current file
-};

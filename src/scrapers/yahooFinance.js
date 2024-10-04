@@ -21,7 +21,7 @@ export const yahooFinanceMostActive = async (url) => {
     // Close the browser
     await browser.close();
 
-    console.log('yahooFinance', tickerElements);
+    console.log('yahooFinance tickers', tickerElements);
 
     return tickerElements;
 };
