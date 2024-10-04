@@ -39,7 +39,7 @@ export const finVizMostActiveHTTP = async (url) => {
         // console.log('Extracted data:', tdData);
         return tdData;
     } catch (error) {
-        console.error(`Error: ${error.message}`);
+        console.error(`Error finVizMostActiveHTTP: ${error.message}`);
         return [];
     }
 };
