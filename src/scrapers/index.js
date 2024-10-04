@@ -5,15 +5,19 @@ import {scrapingSources} from "./config.js";
 import {uniqueList} from "../utils/strings.js";
 import {saveToDatabase} from "../services/tickerService.js";
 import {todayName} from "../utils/timing.js";
+import {wsjMostActive} from "./wsj.js";
+import {finVizMostActiveHTTP} from "./finViz.js";
+import {yahooFinanceMostActive} from "./yahooFinance.js";
+import {tradingViewMostActive, tradingViewMostValuable} from "./tradingView.js";
 
 
 function getScrapingTasks(tasks) {
     const scrapingMap = {
-        // tradingViewMostActive,
-        // tradingViewMostValuable,
-        // yahooFinanceMostActive,
-        // finVizMostActiveHTTP,
-        // wsjMostActive,
+        tradingViewMostActive,
+        tradingViewMostValuable,
+        yahooFinanceMostActive,
+        finVizMostActiveHTTP,
+        wsjMostActive,
         stockAnalysisMostActive,
     };
 
