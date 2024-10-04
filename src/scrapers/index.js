@@ -54,7 +54,7 @@ export const startScraper = async () => {
     // Serialize the unique tickers to a string
     const tickersString = uniqueTickers.join(',');
 
-    saveToDatabase(tickersString, todayName());
+    //saveToDatabase(tickersString, todayName());
 }
 
 

@@ -1,13 +1,11 @@
 // index.js
 
 import {startScraper} from './src/scrapers/index.js';
-import connectDB from "./src/database/config.js";
+import connectDB, {closeDBConnection} from "./src/database/config.js";
 
 
 async function main() {
-
     try {
-        // Establish MongoDB connection first
         await connectDB();
 
         await startScraper();
@@ -15,6 +13,9 @@ async function main() {
         return 0;
     } catch (error) {
         console.error('Error during scraping tasks:', error);
+    } finally {
+        closeDBConnection();
+        process.exit(0); // Exit the process
     }
 }
 

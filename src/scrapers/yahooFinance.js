@@ -3,12 +3,12 @@
 import { chromium } from 'playwright';
 
 export const yahooFinanceMostActive = async (url) => {
-    const browser = await chromium.launch();
+    const browser = await chromium.launch({ headless: true });
     const context = await browser.newContext();
     const page = await context.newPage();
 
     // Navigate to the URL
-    await page.goto(url);
+    await page.goto(url, {timeout: 120*1000});
 
     // Wait for the selector to ensure elements are loaded
     await page.waitForSelector('span.symbol.yf-1jpysdn');
@@ -20,6 +20,8 @@ export const yahooFinanceMostActive = async (url) => {
 
     // Close the browser
     await browser.close();
+
+    console.log('yahooFinance', tickerElements);
 
     return tickerElements;
 };
