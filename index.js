@@ -1,4 +1,7 @@
 // index.js
+/**
+ * The entry point for node.js app
+ * */
 
 import {startScraper} from './src/scrapers/index.js';
 import connectDB, {closeDBConnection} from "./src/database/config.js";

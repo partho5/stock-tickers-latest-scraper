@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collect Stock Symbols</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        #log-container {
+            max-height: 400px;
+            overflow-y: auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        .error {
+            color: red;
+        }
+        .output {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Collect Stock Symbols</h1>
+<p>This software collects stock symbols from the most reputable and distinguished financial platforms to ensure accuracy and reliability.</p>
+
+<div id="log-container"></div>
+
+<script>
+    const { ipcRenderer } = require('electron');
+    const logContainer = document.getElementById('log-container');
+
+    ipcRenderer.on('log', (event, message) => {
+        const logEntry = document.createElement('div');
+        logEntry.className = 'log-entry';
+        if (message.startsWith('Error:')) {
+            logEntry.classList.add('error');
+        } else {
+            logEntry.classList.add('output');
+        }
+        logEntry.textContent = message;
+        logContainer.appendChild(logEntry);
+        logContainer.scrollTop = logContainer.scrollHeight; // Scroll to the bottom
+    });
+</script>
+
+</body>
+</html>
