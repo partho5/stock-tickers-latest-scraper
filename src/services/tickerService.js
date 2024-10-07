@@ -11,7 +11,7 @@ export const saveToDatabase = async (tickersString, identifier) => {
             { tickers: tickersString }, // Update the tickers string
             { new: true, upsert: true } // Return the updated document and create if not found
         );
-        console.log(`Saved tickers: ${tickersString} with ID: ${updatedTicker._id}`);
+        console.log(`Saved tickers: ${tickersString} with identifier: ${identifier}`);
         return updatedTicker._id; // Return the MongoDB document ID
     } catch (error) {
         console.error('Error saving tickers:', error);
