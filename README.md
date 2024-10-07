@@ -21,4 +21,6 @@ This project is a **web scraper** that collects the most active and valuable sto
 
    ```bash
    git clone https://github.com/partho5/stock-tickers-latest-scraper.git
-   cd stock-ticker-scraper
+   cd stock-tickers-latest-scraper
+   npm install
+   npm run dev
